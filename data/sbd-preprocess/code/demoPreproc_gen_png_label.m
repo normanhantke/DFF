@@ -18,7 +18,7 @@ path = genpath('../../../lib/matlab');
 addpath(path);
 
 %% Setup Directories
-dataRoot = '/home/huyuan/seal/data/sbd-preprocess/data_orig'; %'../data_orig';
+dataRoot = '/home/hantke/projects/DFF/data/sbd-preprocess/data_orig'; %'../data_orig';
 genDataRoot = '../data_proc';
 
 %% Setup Parameters

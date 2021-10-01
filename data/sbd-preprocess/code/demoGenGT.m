@@ -17,7 +17,7 @@ path = genpath('../../../lib/matlab');
 addpath(path);
 
 %% Setup Directories
-dataRoot = '/home/huyuan/seal/data/sbd-preprocess/data_orig'; %'../data_orig';
+dataRoot = '/home/hantke/projects/DFF/data/sbd-preprocess/data_orig'; %'../data_orig';
 genDataRoot = {'../gt_eval/gt_orig_thin', '../gt_eval/gt_orig_raw'};
 
 %% Setup Parameters
@@ -28,7 +28,7 @@ numVal = 1000; % param not effective when flagSeed is true & seed exists
 flagSeed = true;
 
 %% Setup Parallel Pool
-numWorker = 6; % Number of matlab workers for parallel computing
+numWorker = 10; % Number of matlab workers for parallel computing
 delete(gcp('nocreate'));
 parpool('local', numWorker);
 
