@@ -19,7 +19,7 @@ from .base_sbd import BaseDataset
 
 class SBDEdgeDetection(BaseDataset):
     NUM_CLASS = 20
-    def __init__(self, root='../../data/sbd-preprocess/data_proc', split='train',
+    def __init__(self, root='../data/sbd-preprocess/data_proc', split='train',
                  mode=None, transform=None, target_transform=None, **kwargs):
         super(SBDEdgeDetection, self).__init__(
             root, split, mode, transform, target_transform, **kwargs)

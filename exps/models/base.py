@@ -15,7 +15,7 @@ from torch.nn.parallel.data_parallel import DataParallel
 from torch.nn.parallel.parallel_apply import parallel_apply
 from torch.nn.parallel.scatter_gather import scatter
 
-from encoding import dilated as resnet
+from encoding.models.backbone import resnet
 from encoding.utils import batch_pix_accuracy, batch_intersection_union
 
 up_kwargs = {'mode': 'bilinear', 'align_corners': True}
@@ -34,13 +34,13 @@ class BaseNet(nn.Module):
         # copying modules from pretrained models
         if backbone == 'resnet50':
             self.pretrained = resnet.resnet50(pretrained=True,
-                                              norm_layer=norm_layer, root=root)
+                                              norm_layer=norm_layer, root=root, dilated=True)
         elif backbone == 'resnet101':
             self.pretrained = resnet.resnet101(pretrained=True,
-                                               norm_layer=norm_layer, root=root)
+                                               norm_layer=norm_layer, root=root, dilated=True)
         elif backbone == 'resnet152':
             self.pretrained = resnet.resnet152(pretrained=True,
-                                               norm_layer=norm_layer, root=root)
+                                               norm_layer=norm_layer, root=root, dilated=True)
         else:
             raise RuntimeError('unknown backbone: {}'.format(backbone))
         # bilinear upsample options

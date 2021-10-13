@@ -5,6 +5,8 @@
 ###########################################################################
 
 import os
+import os.path as osp
+import logging
 import copy
 import time
 import numpy as np
@@ -16,7 +18,7 @@ from torch.nn.parallel.scatter_gather import gather
 
 import encoding.utils as utils
 from encoding.nn import BatchNorm2d
-from encoding.parallel_orig import DataParallelModel, DataParallelCriterion
+from encoding.parallel import DataParallelModel, DataParallelCriterion
 
 from losses import EdgeDetectionReweightedLosses, EdgeDetectionReweightedLosses_CPU
 from datasets import get_edge_dataset
@@ -29,11 +31,36 @@ torch_ver = torch.__version__[:3]
 if torch_ver == '0.3':
     from torch.autograd import Variable
 
+def create_logger(log_root_path,log_name):
+    if not osp.exists(log_root_path):
+        os.makedirs(log_root_path)
+        assert osp.exists(log_root_path), '{} does not exist!!'.format(log_root_path)
+    
+    final_log_path = osp.join(log_root_path, log_name)
+    if not osp.exists(final_log_path):
+        os.makedirs(final_log_path)
+        assert osp.exists(final_log_path), '{} does not exist!!'.format(final_log_path)
+    
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    log_file = '{}_{}.log'.format(log_name,time.strftime("%Y-%m-%d-%H-%M",time.localtime()))
+    BASIC_FORMAT = "%(asctime)s: %(message)s"
+    DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+    formatter = logging.Formatter(BASIC_FORMAT, DATE_FORMAT)
+    chlr = logging.StreamHandler()
+    chlr.setFormatter(formatter)
+    chlr.setLevel('INFO')
+    fhlr = logging.FileHandler(osp.join(final_log_path, log_file))
+    fhlr.setFormatter(formatter)
+    logger.addHandler(chlr)
+    logger.addHandler(fhlr)
+    return logger
+
 class Trainer():
     def __init__(self, args):
         self.args = args
         args.log_name = str(args.checkname)
-        self.logger = utils.create_logger(args.log_root, args.log_name)
+        self.logger = create_logger(args.log_root, args.log_name)
         self.logger.info(args)
         
         # data transforms
@@ -125,7 +152,8 @@ class Trainer():
             self.logger.info("=> loaded checkpoint '{}' (epoch {})".format(args.resume, checkpoint['epoch']))
         
         # lr scheduler
-        self.scheduler = utils.LR_Scheduler(args.lr_scheduler, args.lr, args.epochs, len(self.trainloader), logger=self.logger, lr_step=args.lr_step)
+        self.scheduler = utils.LR_Scheduler(args.lr_scheduler, args.lr, args.epochs, len(self.trainloader), #logger=self.logger,
+         lr_step=args.lr_step)
 
     def training(self, epoch):
         self.model.train()
@@ -135,7 +163,7 @@ class Trainer():
         train_loss_all = 0.
         
         for i, (image, target) in enumerate(tbar):
-            self.scheduler(self.optimizer, i, epoch)
+            self.scheduler(self.optimizer, i, epoch, train_loss)
             self.optimizer.zero_grad()
             if torch_ver == "0.3":
                 image = Variable(image)
