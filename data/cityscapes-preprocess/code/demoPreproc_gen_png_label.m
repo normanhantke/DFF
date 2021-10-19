@@ -17,7 +17,7 @@ addpath(path);
 %% 
 
 %% Setup Directories and Suffixes
-dataRoot = '/home/huyuan/seal/data/cityscapes-preprocess/data_orig'; %'../data_orig';
+dataRoot = '/home/hantke/projects/DFF/data/cityscapes-preprocess/data_orig'; %'../data_orig';
 genDataRoot = '../data_proc'; % debug
 suffixImage = '_leftImg8bit.png';
 suffixColor = '_gtFine_color.png';
@@ -34,7 +34,7 @@ radius = 2;
 flagPngFile = true; % Output .png edge label files
 
 %% Setup Parallel Pool
-numWorker = 6; % Number of matlab workers for parallel computing
+numWorker = 10; % Number of matlab workers for parallel computing
 delete(gcp('nocreate'));
 parpool('local', numWorker);
 

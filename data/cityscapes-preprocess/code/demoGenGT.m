@@ -17,7 +17,7 @@ path = genpath('../../../lib/matlab');
 addpath(path);
 
 %% Setup Directories
-dataRoot = '/home/huyuan/seal/data/cityscapes-preprocess/data_orig'; %'../data_orig';
+dataRoot = '/home/hantke/projects/DFF/data/cityscapes-preprocess/data_orig'; %'../data_orig';
 genDataRoot = {'../gt_eval/gt_thin', '../gt_eval/gt_raw'};
 suffixImage = '_leftImg8bit.png';
 suffixLabelIds = '_gtFine_labelIds.png';
@@ -30,7 +30,7 @@ scale = 0.5;
 edgeType = 'regular';
 
 %% Setup parallel pool
-numWorker = 6; % Number of matlab workers for parallel computing
+numWorker = 10; % Number of matlab workers for parallel computing
 delete(gcp('nocreate'));
 parpool('local', numWorker);
 
@@ -59,7 +59,7 @@ for idx = 1:length(genDataRoot)
             % compute edges and write generated data
             display(['Set: ' setName ', City: ' cityName])
             parfor_progress(length(fileList));
-            parfor idxFile = 1:length(fileList)
+            for idxFile = 1:length(fileList)
                 assert(strcmp(fileList(idxFile).name(end-length(suffixImage)+1:end), suffixImage), 'suffixImage mismatch!')
                 fileName = fileList(idxFile).name(1:end-length(suffixImage));
                 if(idx==1)

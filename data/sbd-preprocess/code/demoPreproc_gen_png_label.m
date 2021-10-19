@@ -58,7 +58,7 @@ if(flagProc)
 end
 
 %% Setup Parallel Pool
-numWorker = 6; % Number of matlab workers for parallel computing
+numWorker = 10; % Number of matlab workers for parallel computing
 delete(gcp('nocreate'));
 parpool('local', numWorker);
 

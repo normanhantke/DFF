@@ -75,7 +75,7 @@ for idx = 1:length(genDataRoot)
         % compute edges and write generated data
         disp(['Computing ' setName ' set boundaries'])
         parfor_progress(countFile);
-        parfor idxFile = 1:countFile %parfor
+        for idxFile = 1:countFile %parfor
             fileName = fileNameSet{idxFile};
             gt_cls = load([dataRoot '/cls/' fileName '.mat']);
             gt_inst = load([dataRoot '/inst/' fileName '.mat']);
