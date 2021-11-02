@@ -8,6 +8,7 @@ import os
 import numpy as np
 from tqdm import tqdm
 from skimage import io
+from skimage import img_as_ubyte
 
 import torch
 from torch.utils import data
@@ -121,13 +122,13 @@ def test(args):
                         for i in range(predict.shape[0]):
                             predict_c = predict[i]
                             path = os.path.join(outdir_list_side5[i], impath)
-                            io.imsave(path, predict_c)
+                            io.imsave(path, img_as_ubyte( predict_c ) )
 
                 for predict, impath in zip(fuse_list, im_paths):
                         for i in range(predict.shape[0]):
                             predict_c = predict[i]
                             path = os.path.join(outdir_list_fuse[i], impath)
-                            io.imsave(path, predict_c)
+                            io.imsave(path, img_as_ubyte( predict_c ) )
     else:
         for i, (images, masks, im_paths, im_sizes) in enumerate(tbar):
             with torch.no_grad():

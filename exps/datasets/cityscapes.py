@@ -19,7 +19,7 @@ from .base_cityscapes import BaseDataset
 
 class CityscapesEdgeDetection(BaseDataset):
     NUM_CLASS = 19
-    def __init__(self, root='../../data/cityscapes-preprocess/data_proc', split='train',
+    def __init__(self, root='../data/cityscapes-preprocess/data_proc', split='train',
                  mode=None, transform=None, target_transform=None, **kwargs):
         super(CityscapesEdgeDetection, self).__init__(
             root, split, mode, transform, target_transform, **kwargs)

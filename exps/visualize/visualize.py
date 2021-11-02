@@ -6,7 +6,7 @@
 
 import numpy as np
 from skimage import io
-
+from skimage import img_as_ubyte
 
 def apply_mask(image, mask, color):
     """Apply the given mask to the image.
@@ -43,7 +43,7 @@ def visualize_prediction(dataset, path, pred):
                [0, 0, 230],
                [119, 11, 32]]
     else:
-      assert dataset == 'sbd'
+      assert dataset == 'SBD'
       colors = [[128, 0, 0],
                [0, 128, 0],
                [128, 128, 0],
@@ -80,4 +80,4 @@ def visualize_prediction(dataset, path, pred):
     masked_image[idx] = masked_image[idx]/edge_sum[idx]
     masked_image[~idx] = 255
     
-    io.imsave(path, masked_image/255)
+    io.imsave(path, img_as_ubyte( masked_image/255 ) )

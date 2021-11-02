@@ -8,13 +8,13 @@
 
 function [result_img] = evaluate_imgs(file_list, result_dir, gt_dir, idx_cls, margin, nthresh, thinpb, maxDist)
 
-num_file = size(file_list, 2); %1
+num_file = size(file_list, 1); %2
 result_img = cell(num_file, 1);
 parfor_progress(num_file);
 parfor idx_file = 1:num_file %parfor
-    display(['Evaluating image ' num2str(idx_file) ' : ' file_list{1, idx_file}]); %file_list{idx_file, 1}
-    edge_pred = double(imread([result_dir '/class_' num2str(idx_cls, '%03d') '/' file_list{1, idx_file} '.png']))./65536; %./255; %file_list{idx_file, 1}
-    gt_load = load([gt_dir '/' file_list{1, idx_file} '.mat']); %file_list{idx_file, 1}
+    display(['Evaluating image ' num2str(idx_file) ' : ' file_list{idx_file, 1}]); %file_list{1, idx_file}
+    edge_pred = double(imread([result_dir '/class_' num2str(idx_cls, '%03d') '/' file_list{idx_file, 1} '.png']))./255; %./65536; %file_list{idx_file, 1}
+    gt_load = load([gt_dir '/' file_list{idx_file, 1} '.mat']); %file_list{1, idx_file}
     gt_fields = fieldnames(gt_load);
     gt = gt_load.(gt_fields{1});
     edge_gt = full(double(gt.Boundaries{idx_cls}));

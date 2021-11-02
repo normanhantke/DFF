@@ -16,6 +16,7 @@ from torch.utils import data
 import torchvision.transforms as transform
 from torch.nn.parallel.scatter_gather import gather
 
+from scheduler import LR_Scheduler
 import encoding.utils as utils
 from encoding.nn import BatchNorm2d
 from encoding.parallel import DataParallelModel, DataParallelCriterion
@@ -152,8 +153,7 @@ class Trainer():
             self.logger.info("=> loaded checkpoint '{}' (epoch {})".format(args.resume, checkpoint['epoch']))
         
         # lr scheduler
-        self.scheduler = utils.LR_Scheduler(args.lr_scheduler, args.lr, args.epochs, len(self.trainloader), #logger=self.logger,
-         lr_step=args.lr_step)
+        self.scheduler = LR_Scheduler(args.lr_scheduler, args.lr, args.epochs, len(self.trainloader), logger=self.logger, lr_step=args.lr_step)
 
     def training(self, epoch):
         self.model.train()
@@ -163,7 +163,7 @@ class Trainer():
         train_loss_all = 0.
         
         for i, (image, target) in enumerate(tbar):
-            self.scheduler(self.optimizer, i, epoch, train_loss)
+            self.scheduler(self.optimizer, i, epoch)
             self.optimizer.zero_grad()
             if torch_ver == "0.3":
                 image = Variable(image)
