@@ -17,9 +17,8 @@ import torchvision.transforms as transform
 from torch.nn.parallel.scatter_gather import gather
 
 from scheduler import LR_Scheduler
-import encoding.utils as utils
-from encoding.nn import BatchNorm2d
-from encoding.parallel import DataParallelModel, DataParallelCriterion
+import utils
+from torch.nn import BatchNorm2d
 
 from losses import EdgeDetectionReweightedLosses, EdgeDetectionReweightedLosses_CPU
 from datasets import get_edge_dataset
@@ -125,8 +124,8 @@ class Trainer():
 
         # using cuda
         if args.cuda:
-            self.model = DataParallelModel(self.model).cuda()
-            self.criterion = DataParallelCriterion(self.criterion).cuda()
+            self.model = self.model.cuda()
+            self.criterion = self.criterion.cuda()
 
         # finetune from a trained model
         if args.ft:

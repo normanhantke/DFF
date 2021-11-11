@@ -1,6 +1,7 @@
 from .base import *
 from .dff import *
 from .casenet import *
+from .model_store import *
 
 def get_edge_model(name, **kwargs):
     models = {

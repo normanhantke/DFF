@@ -229,7 +229,7 @@ def resnet50(pretrained=False, root='./pretrain_models', **kwargs):
     """
     model = ResNet(Bottleneck, [3, 4, 6, 3], **kwargs)
     if pretrained:
-        from encoding.models.model_store import get_model_file
+        from models.model_store import get_model_file
         model.load_state_dict(torch.load(
             get_model_file('resnet50', root=root)), strict=False) # default: imagenet pretrained
     return model
@@ -245,7 +245,7 @@ def resnet101(pretrained=False, root='./pretrain_models', **kwargs):
     #Remove the following lines of comments
     #if u want to train from a pretrained model
     if pretrained:
-       from encoding.models.model_store import get_model_file
+       from models.model_store import get_model_file
        model.load_state_dict(torch.load(
            get_model_file('resnet101', root=root)), strict=False)
     return model

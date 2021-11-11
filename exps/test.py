@@ -15,9 +15,8 @@ from torch.utils import data
 import torchvision.transforms as transform
 from torch.nn.parallel.scatter_gather import gather
 
-import encoding.utils as utils
-from encoding.nn import BatchNorm2d
-from encoding.parallel import DataParallelModel, DataParallelCriterion
+import utils
+from torch.nn import BatchNorm2d
 
 from datasets import get_edge_dataset, test_batchify_fn
 from models import get_edge_model
@@ -83,7 +82,7 @@ def test(args):
     model.load_state_dict(checkpoint['state_dict'], strict=False)
 
     if args.cuda:
-        model = DataParallelModel(model).cuda()
+        model = model.cuda()
     print(model)
 
     model.eval()
