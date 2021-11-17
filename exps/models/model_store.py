@@ -4,8 +4,7 @@ __all__ = ['get_model_file', 'purge']
 import os
 import zipfile
 
-# from ..utils import download, check_sha1
-from encoding.utils import download, check_sha1
+from utils import download, check_sha1
 
 _model_sha1 = {name: checksum for checksum, name in [
     ('853f2fb07aeb2927f7696e166b215609a987fd44', 'resnet50'), #pretrained on MS-COCO

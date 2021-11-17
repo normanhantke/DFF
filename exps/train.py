@@ -16,7 +16,6 @@ from torch.utils import data
 import torchvision.transforms as transform
 from torch.nn.parallel.scatter_gather import gather
 
-from scheduler import LR_Scheduler
 import utils
 from torch.nn import BatchNorm2d
 
@@ -152,7 +151,7 @@ class Trainer():
             self.logger.info("=> loaded checkpoint '{}' (epoch {})".format(args.resume, checkpoint['epoch']))
         
         # lr scheduler
-        self.scheduler = LR_Scheduler(args.lr_scheduler, args.lr, args.epochs, len(self.trainloader), logger=self.logger, lr_step=args.lr_step)
+        self.scheduler = utils.LR_Scheduler(args.lr_scheduler, args.lr, args.epochs, len(self.trainloader), logger=self.logger, lr_step=args.lr_step)
 
     def training(self, epoch):
         self.model.train()

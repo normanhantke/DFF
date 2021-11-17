@@ -16,7 +16,7 @@ from torch.nn.parallel.parallel_apply import parallel_apply
 from torch.nn.parallel.scatter_gather import scatter
 
 from .dilated import resnet
-from encoding.utils import batch_pix_accuracy, batch_intersection_union
+from utils import batch_pix_accuracy, batch_intersection_union
 
 up_kwargs = {'mode': 'bilinear', 'align_corners': True}
 
