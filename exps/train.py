@@ -167,9 +167,9 @@ class Trainer():
                 image = Variable(image)
                 target = Variable(target)
 
-            outputs = self.model(image.float())
+            outputs = self.model(image.cuda().float())
 
-            loss = self.criterion(outputs, target)
+            loss = self.criterion(outputs, target.cuda())
             loss.backward()
 
             self.optimizer.step()
@@ -208,8 +208,8 @@ class Trainer():
                 image = Variable(image, volatile=True)
             else:
                 with torch.no_grad():
-                    outputs = self.model(image.float())
-                    loss = self.criterion(outputs, target)
+                    outputs = self.model(image.cuda()float())
+                    loss = self.criterion(outputs, target.cuda())
 
                     val_loss += loss.item()
                     val_loss_all += loss.item()
