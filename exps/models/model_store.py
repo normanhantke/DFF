@@ -5,7 +5,7 @@ import os
 import zipfile
 import portalocker
 
-from ..utils import download, check_sha1
+from utils import download, check_sha1
 
 _model_sha1 = {name: checksum for checksum, name in [
     # resnest
