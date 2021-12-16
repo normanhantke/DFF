@@ -19,10 +19,11 @@ from .base_cityscapes import BaseDataset
 
 class CityscapesEdgeDetection(BaseDataset):
     NUM_CLASS = 19
-    def __init__(self, root='../data/cityscapes-preprocess/data_proc', split='train',
+    def __init__(self, root='../data', split='train',
                  mode=None, transform=None, target_transform=None, **kwargs):
         super(CityscapesEdgeDetection, self).__init__(
             root, split, mode, transform, target_transform, **kwargs)
+        root = os.path.join(root, 'cityscapes-preprocess/data_proc')
         assert os.path.exists(root), "Please download the dataset and place it under: %s"%root
 
         self.images, self.masks = _get_cityscapes_pairs(root, split)
