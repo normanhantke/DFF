@@ -192,7 +192,7 @@ class Trainer():
             if epoch % 19 == 0 or epoch == args.epochs-1:
                 utils.save_checkpoint({
                     'epoch': epoch + 1,
-                    'state_dict': self.model.module.state_dict(),
+                    'state_dict': self.model.state_dict(),
                     'optimizer': self.optimizer.state_dict(),
                     }, self.args, filename)
 
