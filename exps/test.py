@@ -35,10 +35,10 @@ def test(args):
     
     # dataset
     if args.eval: # set split='val' for validation set testing
-        testset = get_edge_dataset(args.dataset, split='val', mode='testval',
+        testset = get_edge_dataset(args.dataset, root=args.data_folder, split='val', mode='testval',
                                            transform=input_transform, crop_size=args.crop_size)
     else: # set split='vis' for visulization
-        testset = get_edge_dataset(args.dataset, split='vis', mode='vis',
+        testset = get_edge_dataset(args.dataset, root=args.data_folder, split='vis', mode='vis',
                                            transform=input_transform, crop_size=args.crop_size)
 
     # output folder

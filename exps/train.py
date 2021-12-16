@@ -72,9 +72,9 @@ class Trainer():
                        'crop_size': args.crop_size, 'logger': self.logger,
                        'scale': args.scale}
         
-        trainset = get_edge_dataset(args.dataset, split='train', mode='train',
+        trainset = get_edge_dataset(args.dataset, root=args.data_folder, split='train', mode='train',
                                             **data_kwargs)
-        testset = get_edge_dataset(args.dataset, split='val', mode='val',
+        testset = get_edge_dataset(args.dataset, root=args.data_folder, split='val', mode='val',
                                            **data_kwargs)
 
         # dataloader
