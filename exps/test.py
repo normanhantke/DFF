@@ -93,7 +93,7 @@ def test(args):
             with torch.no_grad():
                 images = [image.unsqueeze(0) for image in images]
                 images = torch.cat(images, 0)
-                outputs = model(images.float())
+                outputs = model(images.cuda().float())
 
                 num_gpus = len(os.environ['CUDA_VISIBLE_DEVICES'].split(','))
                 if num_gpus == 1:
