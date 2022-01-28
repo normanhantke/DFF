@@ -15,7 +15,7 @@ class BGTEdgeDetection(BaseDataset):
     NUM_CLASS = 3
     def __init__(self, root='../data', split='train',
                  mode=None, transform=None, target_transform=None, **kwargs):
-        super(CityscapesEdgeDetection, self).__init__(
+        super(BGTEdgeDetection, self).__init__(
             root, split, mode, transform, target_transform, **kwargs)
         root = os.path.join(root, 'bgt-dataset')
         assert os.path.exists(root), "Please download the dataset and place it under: %s"%root
@@ -74,33 +74,32 @@ class BGTEdgeDetection(BaseDataset):
     def pred_offset(self):
         return 0
 
-def _get_bgt_pars(folder, split='train'):
+def _get_bgt_pairs(folder, split='train'):
 
-    if not path.exists(folder):
+    if not os.path.exists(folder):
         print("Could not find the dataset directory!")
 
     if split == 'train':
         images_dir = os.path.join( os.path.join(folder, "train"), "images" )
-        labels_dir = os.path.join( os.path.join(folder, "train"), "labels" )
+        labels_dir = os.path.join( os.path.join(folder, "train"), "edges" )
     elif split == 'val':
         images_dir = os.path.join( os.path.join(folder, "val"), "images" )
-        labels_dir = os.path.join( os.path.join(folder, "val"), "labels" )
+        labels_dir = os.path.join( os.path.join(folder, "val"), "edges" )
     elif split == 'test':
         images_dir = os.path.join( os.path.join(folder, "test"), "images" )
-        labels_dir = os.path.join( os.path.join(folder, "test"), "labels" )
+        labels_dir = os.path.join( os.path.join(folder, "test"), "edges" )
     else:
         images_dir = os.path.join( os.path.join(folder, "vis"), "images" )
-        labels_dir = os.path.join( os.path.join(folder, "vis"), "labels" )
+        labels_dir = os.path.join( os.path.join(folder, "vis"), "edges" )
         
-    if not path.exists(images_dir):
+    if not os.path.exists(images_dir):
         print("Could not find the images directory!")
-    if not path.exists(labels_dir):
+    if not os.path.exists(labels_dir):
         print("Could not find the labels directory!")    
-
-    
-    img_paths = [f for f in os.listdir( images_dir ) if path.isfile( path.join(images_dir, f) ) ]
+        
+    img_paths = [ os.path.join( images_dir, f ) for f in os.listdir( images_dir ) if os.path.isfile( os.path.join(images_dir, f) ) ]
     img_paths.sort()
-    mask_paths = [f for f in os.listdir( labels_dir ) if path.isfile( path.join(labels_dir, f) ) ]
+    mask_paths = [ os.path.join( labels_dir, f ) for f in os.listdir( labels_dir ) if os.path.isfile( os.path.join(labels_dir, f) ) ]
     mask_paths.sort()
-    
+
     return img_paths, mask_paths

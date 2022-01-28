@@ -1,6 +1,7 @@
 from .base_cityscapes import *
 from .cityscapes import CityscapesEdgeDetection
 from .sbd import SBDEdgeDetection
+from .bgt import BGTEdgeDetection
 
 datasets = {
     'cityscapes': CityscapesEdgeDetection,
