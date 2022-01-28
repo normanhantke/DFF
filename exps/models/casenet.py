@@ -53,6 +53,7 @@ def get_casenet(dataset='cityscapes', backbone='resnet50', pretrained=False,
     acronyms = {
         'cityscapes': 'cityscapes',
         'sbd': 'sbd',
+        'bgt': 'bgt',
     }
     # infer number of classes
     from datasets import datasets

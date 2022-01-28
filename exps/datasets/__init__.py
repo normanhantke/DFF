@@ -5,6 +5,7 @@ from .sbd import SBDEdgeDetection
 datasets = {
     'cityscapes': CityscapesEdgeDetection,
     'sbd': SBDEdgeDetection,
+    'bgt': BGTEdgeDetection,
 }
 
 def get_edge_dataset(name, **kwargs):
