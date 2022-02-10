@@ -61,7 +61,6 @@ class BGTEdgeDetection(BaseDataset):
         return img, mask
 
     def _mask_transform(self, mask):
-        mask = np.unpackbits(np.array(mask), axis=2)[:,:,-1:-self.NUM_CLASS:-1]
         mask = torch.from_numpy(np.array(mask)).float()
         mask = mask.permute(2, 0, 1) # channel first
 

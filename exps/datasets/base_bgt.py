@@ -49,7 +49,6 @@ class BaseDataset(data.Dataset):
         img = img.crop((x1, y1, x1+crop_size, y1+crop_size))
         mask = mask.crop((x1, y1, x1+crop_size, y1+crop_size))
 
-        mask = np.unpackbits(np.array(mask), axis=2)[:,:,-1:-self.NUM_CLASS:-1]
         mask = torch.from_numpy(np.array(mask)).float()
         mask = mask.permute(2, 0, 1) #channel first
 
@@ -110,7 +109,6 @@ class BaseDataset(data.Dataset):
         pad_index = pad_index.reshape(-1, pad_index.shape[0], pad_index.shape[1])
         pad_index = torch.from_numpy(pad_index).float()
 
-        mask = np.unpackbits(np.array(mask), axis=2)[:,:,-1:-self.NUM_CLASS:-1]
         mask = torch.from_numpy(np.array(mask)).float()
         mask = mask.permute(2, 0, 1) #channel first
 
